@@ -1,16 +1,26 @@
 <!DOCTYPE html>
 <html>
 
-<header><title>Learn</title></header>
+<header>
+  <title>Novice Script</title>
+  <script src="scr/Drawer.js"></script>
+  <script src="scr/globalvars.js"></script>
+
+</header>
+
 <canvas id="canvas" width="500" height="500"></canvas>
 <body>
 <script>
-  //<script src="tools.js"><!script>
-  let canvas = document.getElementById("novicescript");
+
+  let canvas = document.getElementById("canvas");
   let ctx = canvas.getContext("2d");
 
-  ctx.fillStyle = 'rgb(200,0,0)';
+  ctx.fillStyle = 'ivory';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  let drawer = new Drawer(canvas, ctx);
+  drawer.drawGrid();
+
 </script>
 </body>
 </html>
