@@ -5,21 +5,29 @@
   <title>Novice Script</title>
   <script src="scr/Drawer.js"></script>
   <script src="scr/globalvars.js"></script>
+  <script src="scr/Texter.js"></script>
 
 </header>
 
 <canvas id="canvas" width="500" height="500"></canvas>
+<canvas id="textcan" width="500" height="500"></canvas>
+
 <body>
 <script>
 
   let canvas = document.getElementById("canvas");
   let ctx = canvas.getContext("2d");
+  let textcan = document.getElementById("textcan");
+  let textctx = textcan.getContext("2d");
 
   ctx.fillStyle = 'ivory';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   let drawer = new Drawer(canvas, ctx);
   drawer.drawGrid();
+
+  let texter = new Texter(textcan, textctx);
+  //texter.startLoop();
 
 </script>
 </body>
