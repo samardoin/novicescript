@@ -5,29 +5,64 @@
   <title>Novice Script</title>
   <script src="scr/Drawer.js"></script>
   <script src="scr/globalvars.js"></script>
-  <script src="scr/Texter.js"></script>
+
 
 </header>
-
+<button type="button" id = "run_button">RUN</button>
+<button type="button" id = "step_button">STEP</button>
+</br>
 <canvas id="canvas" width="500" height="500"></canvas>
-<canvas id="textcan" width="500" height="500"></canvas>
+<textarea id="textarea" rows="38" cols="80"></textarea>
+
 
 <body>
-<script>
+<style>
+body {
+    height: 200px;
+    background-color: silver;
+}
+button {
+  border: 2px solid lightgrey;
+  outline-width: 0;
+}
+textarea {
+  resize: none;
+  border: 2px solid lightgrey;
+  color: #444;
+  outline-width: 0;
+}
 
+
+</style>
+
+<script>
   let canvas = document.getElementById("canvas");
   let ctx = canvas.getContext("2d");
-  let textcan = document.getElementById("textcan");
-  let textctx = textcan.getContext("2d");
+  let textarea = document.getElementById("textarea");
 
-  ctx.fillStyle = 'ivory';
+
+
+  //disable space scrolling
+  /*window.onkeydown=function(e){
+    if(e.keyCode==32){
+     return false;
+    }
+  };*/
+
+  // Create gradient
+  var grd=ctx.createLinearGradient(0,0,200,0);
+  grd.addColorStop(0,"grey");
+  grd.addColorStop(1,"lightgrey");
+
+  // Fill with gradient
+  ctx.fillStyle=grd;
+  //ctx.fillRect(10,10,150,80);
+
+  //ctx.fillStyle = 'black';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   let drawer = new Drawer(canvas, ctx);
   drawer.drawGrid();
-
-  let texter = new Texter(textcan, textctx);
-  //texter.startLoop();
 
 </script>
 </body>
