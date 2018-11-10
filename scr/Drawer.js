@@ -10,19 +10,19 @@ let Drawer = function(canvas_o,ctx_o){
     let lineThickness = 1;
     for (let i = 0; i < gridBoxs;i++){
       for (let j = 0; j < gridBoxs;j++){
-        ctx.fillStyle = 'black';
+        ctx.fillStyle = 'silver';
         ctx.fillRect(i*g_gridSize+startx,
           j*g_gridSize+starty,
           g_gridSize,
           g_gridSize);
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = 'black';
         ctx.fillRect(i*g_gridSize+lineThickness+startx,
           j*g_gridSize+starty,
           g_gridSize-lineThickness,
           g_gridSize-lineThickness);
       }//end inner for
     }//end outer for
-    ctx.fillStyle = 'black';
+    ctx.fillStyle = 'silver';
     ctx.fillRect(startx,starty,gridBoxs*g_gridSize,lineThickness);
     ctx.fillRect(gridBoxs*g_gridSize-1+startx,starty,
       lineThickness,gridBoxs*g_gridSize);

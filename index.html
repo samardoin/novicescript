@@ -14,6 +14,8 @@
 <canvas id="canvas" width="500" height="500"></canvas>
 <textarea id="textarea" rows="38" cols="80"></textarea>
 
+<tag autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+
 
 <body>
 <style>
@@ -40,29 +42,20 @@ textarea {
   let ctx = canvas.getContext("2d");
   let textarea = document.getElementById("textarea");
 
-
-
-  //disable space scrolling
-  /*window.onkeydown=function(e){
-    if(e.keyCode==32){
-     return false;
-    }
-  };*/
-
-  // Create gradient
-  var grd=ctx.createLinearGradient(0,0,200,0);
-  grd.addColorStop(0,"grey");
-  grd.addColorStop(1,"lightgrey");
+  //var grd=ctx.createLinearGradient(0,0,200,0);
+  //grd.addColorStop(0,"grey");
+  //grd.addColorStop(1,"lightgrey");
 
   // Fill with gradient
-  ctx.fillStyle=grd;
+  //ctx.fillStyle=grd;
   //ctx.fillRect(10,10,150,80);
 
-  //ctx.fillStyle = 'black';
+  ctx.fillStyle = 'silver';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   let drawer = new Drawer(canvas, ctx);
   drawer.drawGrid();
+
 
 </script>
 </body>
