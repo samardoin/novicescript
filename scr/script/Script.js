@@ -1,8 +1,7 @@
-let Script = function(){
+var Script = function(){
   let script = this;
-  let stack = new Stack();
-  let globalFunctions = [];
+  this.globalFunctions = [];
   let globalObjects = [];
   let globalVars = [];
-  
 }
+var mainScript /*= new Script()*/;

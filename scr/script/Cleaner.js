@@ -3,8 +3,8 @@
 var Cleaner = function(o_text){
   let cleaner = this;
   let text = o_text;
-  let script = new Script();
 
+  mainScript = new Script();
   //create a quote record
   let quoteRecord=[];
   let find_quoteRecord=function(){//segment code to reduce loose vars
@@ -76,19 +76,22 @@ var Cleaner = function(o_text){
     }
     let skipScope = function(i){
       let currentScope = 0;
+      let cscope = 0;
       let moved = false;
       let start = undefined;
       i++;
       for (;i < text.length;i++){
         if (quoteRecord[i] != 0) continue;
-        else if (text.charAt(i) == '{'){
+        if (text.charAt(i) =='(') cscope++;
+        else if (text.charAt(i) ==')') cscope--;
+        else if (text.charAt(i) == '{' && cscope == 0){
           currentScope++;
           if (moved == false){
             start = i;
             moved = true;
           }
         }
-        else if (text.charAt(i) == '}'){
+        else if (text.charAt(i) == '}' && cscope == 0){
           currentScope--;
         }
         if (moved == true && currentScope==0) break;
@@ -113,7 +116,8 @@ var Cleaner = function(o_text){
         i++;
         let temp = skipScope(i);
 
-        let ftemp = new Function(text.substr(start,temp.end+1),quoteRecord.slice(start,temp.end+1),"global");
+        let ftemp = new Function(text.substr(start,temp.end+1),quoteRecord.slice(start,temp.end+1),"global",0);
+        mainScript.globalFunctions.push(ftemp);
 
         if (text.substr(start,temp.end+1).length != quoteRecord.slice(start,temp.end+1).length) {
           throw "quote != ftemp @ Cleaner:documentGlobal";
@@ -148,4 +152,8 @@ var Cleaner = function(o_text){
     }
   };documentGlobal();
 
+  console.log("Global Functions:");
+  for (let i = 0 ; i < mainScript.globalFunctions.length;i++){
+    console.log(mainScript.globalFunctions[i].getName());
+  }
 }
