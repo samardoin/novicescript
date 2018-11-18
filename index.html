@@ -3,8 +3,20 @@
 
 <header>
   <title>Novice Script</title>
-  <script src="scr/Drawer.js"></script>
+
   <script src="scr/globalvars.js"></script>
+  <script src="scr/Drawer.js"></script>
+  <script src="scr/script/Code.js"></script>
+  <script src="scr/script/Function.js"></script>
+  <script src="scr/script/Object.js"></script>
+  <script src="scr/script/Script.js"></script>
+  <script src="scr/script/ScriptConstants.js"></script>
+  <script src="scr/script/Stack.js"></script>
+
+  <script src="scr/script/Var.js"></script>
+  <script src="scr/script/Cleaner.js"></script>
+
+
 
 
 </header>
@@ -55,6 +67,9 @@ textarea {
 
   let drawer = new Drawer(canvas, ctx);
   drawer.drawGrid();
+
+  //let script = new Script();
+  let script = Cleaner("function main () {\n\treturn \'0\';\n}\n\nvar one = 1;\n\nclass name {\n\n}\n");
 
 
 </script>
