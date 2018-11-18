@@ -1,5 +1,1 @@
-The
-Read
-Me
-File
-#s
+#Novice Script
