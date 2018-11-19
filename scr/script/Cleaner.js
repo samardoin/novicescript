@@ -59,6 +59,9 @@ var Cleaner = function(o_text){
   };find_quoteRecord();
 
   let documentGlobal = function(){
+    let dstart = 0;
+    let dend = undefined;
+    //skipWhiteSpace
     let skipWhite = function(i){
       if (i >= text.length) return undefined;
       while (whiteSpace.includes(text.charAt(i))){
@@ -67,6 +70,7 @@ var Cleaner = function(o_text){
       }
       return i;
     }
+    //skipNonWhiteSpace
     let skipNotWhite = function(i){
       while (whiteSpace.includes(text.charAt(i)) == false || quoteRecord[i]!=0){
         i++;
@@ -74,52 +78,49 @@ var Cleaner = function(o_text){
       if (i >= text.length) return text.length-1;
       return i-1;
     }
-    let skipScope = function(i){
-      let currentScope = 0;
-      let cscope = 0;
-      let moved = false;
-      let start = undefined;
-      i++;
-      for (;i < text.length;i++){
-        if (quoteRecord[i] != 0) continue;
-        if (text.charAt(i) =='(') cscope++;
-        else if (text.charAt(i) ==')') cscope--;
-        else if (text.charAt(i) == '{' && cscope == 0){
-          currentScope++;
-          if (moved == false){
-            start = i;
-            moved = true;
+    //skipToEndOfScope
+    let skipScope = function(s){
+      skscope = 0;
+      let sks = 0;
+      for (let i = s ; i < text.length;i++){
+        if (quoteRecord[i] != 0){}
+        else if (text.charAt(i) == '{') {
+          if (skscope == 0){
+            sks = i;
+          }
+          skscope++;
+        }
+        else if (text.charAt(i) == '}') {
+          skscope--;
+          if (skscope == 0) {
+            return {start:sks, end:i};
           }
         }
-        else if (text.charAt(i) == '}' && cscope == 0){
-          currentScope--;
-        }
-        if (moved == true && currentScope==0) break;
       }
-      //ADD ERROR CHECK!!!!!!!!!!
-      return {start: start, end: i};
+      throw "End of scope undefined";
     }
-    let start = 0;
-    let end = undefined;
+
+
     for (let i = 0 ; true;){
-      i=skipWhite(i);
-      //console.log("start:" + text.substring(i));
-      if (i == undefined){break;}
-      start = i;
-      i=skipNotWhite(i);
-      end = i;
-      //console.log("end:" + end);
-      console.log("type:|" + text.substring(start,end+1) +"|");
+      i=skipWhite(i);//skip init whitespace
+      if (i == undefined || isNaN(i)){break;}
+      start = i;//start of first word
+      i=skipNotWhite(i);//find the end of the first word
+      end = i;//end of the first word
+      console.log("type:|" + text.substring(start,end+1) +"|");//first word
 
       if (i>=text.length) break;
       else if (text.substring(start,end+1) == "function" ){
-        i++;
+        i++;//space after function
         let temp = skipScope(i);
+        console.log("F:",text.substring(temp.start+1,temp.end) + ":");
 
-        let ftemp = new Function(text.substr(start,temp.end+1),quoteRecord.slice(start,temp.end+1),"global",0);
+        let ftemp = new Function(text.substring(start,temp.end+1),quoteRecord.slice(start,temp.end+1),"global",0);
         mainScript.globalFunctions.push(ftemp);
 
-        if (text.substr(start,temp.end+1).length != quoteRecord.slice(start,temp.end+1).length) {
+        console.log("|" + text.substring(start,temp.end+1) + "|");
+        console.log("q:\t" + quoteRecord.slice(start,temp.end+1));
+        if (text.substring(start,temp.end+1).length != quoteRecord.slice(start,temp.end+1).length) {
           throw "quote != ftemp @ Cleaner:documentGlobal";
         }
         i = temp.end+1;

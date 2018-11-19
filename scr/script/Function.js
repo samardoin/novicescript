@@ -100,9 +100,9 @@ var Function = function(o_text, o_quoteRecord, o_master,o_num){
       }
       if (temptext!=""){
         let action = new Action();
-        l.value=temptext;
-        l.num =currentNum;
-        actions.push(l);
+        action.value=temptext;
+        action.num =currentNum;
+        actions.push(action);
       }
     };findActions();
 
